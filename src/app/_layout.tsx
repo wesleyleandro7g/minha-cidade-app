@@ -6,40 +6,45 @@ import {
   ThemeProvider,
 } from '@react-navigation/native'
 import { SplashScreen, Stack } from 'expo-router'
-import { useColorScheme } from 'react-native'
 import { TamaguiProvider } from 'tamagui'
+import { useColorScheme } from 'react-native'
+import { useEffect } from 'react'
+import { useFonts } from 'expo-font'
+
+import {
+  Nunito_300Light,
+  Nunito_400Regular,
+  Nunito_500Medium,
+  Nunito_600SemiBold,
+  Nunito_700Bold,
+} from '@expo-google-fonts/nunito'
 
 import { config } from '../../tamagui.config'
-import { useFonts } from 'expo-font'
-import { useEffect } from 'react'
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router'
+export { ErrorBoundary } from 'expo-router'
 
 export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
   initialRouteName: '(tabs)',
 }
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
-  const [interLoaded, interError] = useFonts({
-    Inter: require('@tamagui/font-inter/otf/Inter-Medium.otf'),
-    InterBold: require('@tamagui/font-inter/otf/Inter-Bold.otf'),
+  const [fontsLoaded, fontsError] = useFonts({
+    Nunito_300Light,
+    Nunito_400Regular,
+    Nunito_500Medium,
+    Nunito_600SemiBold,
+    Nunito_700Bold,
   })
 
   useEffect(() => {
-    if (interLoaded || interError) {
-      // Hide the splash screen after the fonts have loaded (or an error was returned) and the UI is ready.
+    if (fontsLoaded || fontsError) {
       SplashScreen.hideAsync()
     }
-  }, [interLoaded, interError])
+  }, [fontsLoaded, fontsError])
 
-  if (!interLoaded && !interError) {
+  if (!fontsLoaded && !fontsError) {
     return null
   }
 

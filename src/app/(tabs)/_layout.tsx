@@ -1,11 +1,14 @@
-import { Tabs } from 'expo-router'
 import Ionicons from '@expo/vector-icons/Ionicons'
+import { getTokens } from '@tamagui/core'
+import { Tabs } from 'expo-router'
 
 export default function TabLayout() {
+  const primaryColor = getTokens().color.primary.val
+
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: 'purple',
+        tabBarActiveTintColor: primaryColor,
         tabBarInactiveTintColor: '#797979',
         headerShown: false,
         tabBarHideOnKeyboard: true,
