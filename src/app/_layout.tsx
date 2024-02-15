@@ -10,6 +10,7 @@ import { TamaguiProvider } from 'tamagui'
 import { useColorScheme } from 'react-native'
 import { useEffect } from 'react'
 import { useFonts } from 'expo-font'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 import {
   Nunito_300Light,
@@ -57,10 +58,12 @@ function RootLayoutNav() {
   return (
     <TamaguiProvider config={config} defaultTheme={colorScheme as any}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-          <Stack.Screen name='modal' options={{ presentation: 'modal' }} />
-        </Stack>
+        <SafeAreaProvider>
+          <Stack>
+            <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+            <Stack.Screen name='modal' options={{ presentation: 'modal' }} />
+          </Stack>
+        </SafeAreaProvider>
       </ThemeProvider>
     </TamaguiProvider>
   )
