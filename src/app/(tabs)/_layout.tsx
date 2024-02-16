@@ -1,7 +1,9 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { getTokens } from '@tamagui/core'
+import { BlurView } from 'expo-blur'
 import { Tabs } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { StyleSheet } from 'react-native'
 
 export default function TabLayout() {
   const primaryColor = getTokens().color.primary.val
@@ -14,49 +16,56 @@ export default function TabLayout() {
           tabBarInactiveTintColor: '#797979',
           headerShown: false,
           tabBarHideOnKeyboard: true,
-          tabBarLabelStyle: {
-            padding: 0,
-            marginBottom: 4,
+          tabBarShowLabel: false,
+          tabBarStyle: {
+            width: '60%',
+            height: 58,
+            position: 'absolute',
+            bottom: 18,
+            marginHorizontal: '20%',
+            borderRadius: 56,
+            shadowColor: 'transparent',
           },
-          tabBarIconStyle: {
-            marginBottom: -4,
+          tabBarItemStyle: {
+            borderRadius: 56,
+            margin: 4,
           },
+          tabBarActiveBackgroundColor: `${primaryColor}20`,
+          // tabBarBackground: () => (
+          //   <BlurView
+          //     experimentalBlurMethod='dimezisBlurView'
+          //     intensity={50}
+          //     style={{
+          //       ...StyleSheet.absoluteFillObject,
+          //       backgroundColor: '#ffffff95',
+          //       borderRadius: 56,
+          //       overflow: 'hidden',
+          //     }}
+          //   />
+          // ),
         }}
       >
         <Tabs.Screen
-          name='(home)'
+          name='home/index'
           options={{
             title: 'Home',
             tabBarIcon: ({ color, focused }) => (
               <Ionicons
-                name={focused ? 'bag-handle' : 'bag-handle-outline'}
-                size={22}
+                name={focused ? 'home' : 'home-outline'}
+                size={24}
                 color={color}
               />
             ),
           }}
         />
         <Tabs.Screen
-          name='stores/index'
+          name='shop/index'
           options={{
             title: 'Lojas',
             tabBarIcon: ({ color, focused }) => (
               <Ionicons
-                name={focused ? 'storefront' : 'storefront-outline'}
-                size={22}
-                color={color}
-              />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name='adverts/index'
-          options={{
-            title: 'Anuncios',
-            tabBarIcon: ({ color, focused }) => (
-              <Ionicons
-                name={focused ? 'document-text' : 'document-text-outline'}
-                size={22}
+                name={focused ? 'bag-handle' : 'bag-handle-outline'}
+                size={25}
                 color={color}
               />
             ),
@@ -69,7 +78,7 @@ export default function TabLayout() {
             tabBarIcon: ({ color, focused }) => (
               <Ionicons
                 name={focused ? 'person' : 'person-outline'}
-                size={22}
+                size={24}
                 color={color}
               />
             ),

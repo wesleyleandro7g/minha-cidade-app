@@ -7,12 +7,12 @@ import {
 } from '@react-navigation/native'
 import { SplashScreen, Stack } from 'expo-router'
 import { TamaguiProvider } from 'tamagui'
-import { useColorScheme } from 'react-native'
-import { useEffect } from 'react'
-import { useFonts } from 'expo-font'
+import { View, useColorScheme } from 'react-native'
+import { useCallback } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 import {
+  useFonts,
   Nunito_300Light,
   Nunito_400Regular,
   Nunito_500Medium,
@@ -24,13 +24,15 @@ import { config } from '../../tamagui.config'
 
 export { ErrorBoundary } from 'expo-router'
 
-export const unstable_settings = {
-  initialRouteName: '(tabs)',
-}
+// export const unstable_settings = {
+//   initialRouteName: '(tabs)',
+// }
 
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
+  const colorScheme = useColorScheme()
+
   const [fontsLoaded, fontsError] = useFonts({
     Nunito_300Light,
     Nunito_400Regular,
@@ -39,9 +41,9 @@ export default function RootLayout() {
     Nunito_700Bold,
   })
 
-  useEffect(() => {
+  const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded || fontsError) {
-      SplashScreen.hideAsync()
+      await SplashScreen.hideAsync()
     }
   }, [fontsLoaded, fontsError])
 
@@ -49,22 +51,31 @@ export default function RootLayout() {
     return null
   }
 
-  return <RootLayoutNav />
-}
-
-function RootLayoutNav() {
-  const colorScheme = useColorScheme()
-
   return (
-    <TamaguiProvider config={config} defaultTheme={colorScheme as any}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <SafeAreaProvider>
-          <Stack>
-            <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-            <Stack.Screen name='modal' options={{ presentation: 'modal' }} />
-          </Stack>
-        </SafeAreaProvider>
-      </ThemeProvider>
-    </TamaguiProvider>
+    <View onLayout={onLayoutRootView} style={{ flex: 1 }}>
+      <TamaguiProvider config={config} defaultTheme={colorScheme as any}>
+        <ThemeProvider
+          value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+        >
+          <SafeAreaProvider>
+            <Stack>
+              <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+              <Stack.Screen
+                name='search/index'
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name='store/[storeId]'
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name='store-product/[productId]'
+                options={{ headerShown: false }}
+              />
+            </Stack>
+          </SafeAreaProvider>
+        </ThemeProvider>
+      </TamaguiProvider>
+    </View>
   )
 }
