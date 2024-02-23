@@ -1,9 +1,13 @@
-import Ionicons from '@expo/vector-icons/Ionicons'
+import { Text } from 'tamagui'
 import { getTokens } from '@tamagui/core'
-import { BlurView } from 'expo-blur'
 import { Tabs } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { StyleSheet } from 'react-native'
+import {
+  UserRound,
+  Search,
+  Bookmark,
+  GalleryVerticalEnd,
+} from 'lucide-react-native'
 
 export default function TabLayout() {
   const primaryColor = getTokens().color.primary.val
@@ -16,58 +20,71 @@ export default function TabLayout() {
           tabBarInactiveTintColor: '#797979',
           headerShown: false,
           tabBarHideOnKeyboard: true,
-          tabBarShowLabel: false,
+          tabBarShowLabel: true,
           tabBarStyle: {
-            width: '60%',
+            // width: '90%',
             height: 58,
-            position: 'absolute',
-            bottom: 18,
-            marginHorizontal: '20%',
-            borderRadius: 56,
-            shadowColor: 'transparent',
+            // shadowColor: 'transparent',
+            // position: 'absolute',
+            // bottom: 12,
+            // marginHorizontal: '5%',
+            // borderRadius: 64,
           },
           tabBarItemStyle: {
             borderRadius: 56,
             margin: 4,
+            padding: 2,
           },
           tabBarActiveBackgroundColor: `${primaryColor}20`,
-          // tabBarBackground: () => (
-          //   <BlurView
-          //     experimentalBlurMethod='dimezisBlurView'
-          //     intensity={50}
-          //     style={{
-          //       ...StyleSheet.absoluteFillObject,
-          //       backgroundColor: '#ffffff95',
-          //       borderRadius: 56,
-          //       overflow: 'hidden',
-          //     }}
-          //   />
-          // ),
         }}
       >
         <Tabs.Screen
           name='home/index'
           options={{
-            title: 'Home',
-            tabBarIcon: ({ color, focused }) => (
-              <Ionicons
-                name={focused ? 'home' : 'home-outline'}
-                size={24}
+            title: 'Início',
+            tabBarIcon: ({ color }) => (
+              <GalleryVerticalEnd size={24} color={color} />
+            ),
+            tabBarLabel: ({ color, focused, children }) => (
+              <Text
                 color={color}
-              />
+                fontWeight={focused ? '700' : '500'}
+                fontSize='$1'
+              >
+                {children}
+              </Text>
             ),
           }}
         />
         <Tabs.Screen
-          name='shop/index'
+          name='explorer/index'
           options={{
-            title: 'Lojas',
-            tabBarIcon: ({ color, focused }) => (
-              <Ionicons
-                name={focused ? 'bag-handle' : 'bag-handle-outline'}
-                size={25}
+            title: 'Explorar',
+            tabBarIcon: ({ color }) => <Search size={25} color={color} />,
+            tabBarLabel: ({ color, focused, children }) => (
+              <Text
                 color={color}
-              />
+                fontWeight={focused ? '700' : '500'}
+                fontSize='$1'
+              >
+                {children}
+              </Text>
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name='favorites/index'
+          options={{
+            title: 'Favoritos',
+            tabBarIcon: ({ color }) => <Bookmark size={25} color={color} />,
+            tabBarLabel: ({ color, focused, children }) => (
+              <Text
+                color={color}
+                fontWeight={focused ? '700' : '500'}
+                fontSize='$1'
+              >
+                {children}
+              </Text>
             ),
           }}
         />
@@ -75,12 +92,15 @@ export default function TabLayout() {
           name='profile/index'
           options={{
             title: 'Eu',
-            tabBarIcon: ({ color, focused }) => (
-              <Ionicons
-                name={focused ? 'person' : 'person-outline'}
-                size={24}
+            tabBarIcon: ({ color }) => <UserRound size={24} color={color} />,
+            tabBarLabel: ({ color, focused, children }) => (
+              <Text
                 color={color}
-              />
+                fontWeight={focused ? '700' : '500'}
+                fontSize='$1'
+              >
+                {children}
+              </Text>
             ),
           }}
         />

@@ -41,8 +41,9 @@ const tokens = createTokens({
     orange: '#FF6347',
     black: '#0C0C0C',
     gray: '#121212',
-    white: '#F1F0F3',
+    white: '#ffffff',
     slate: '#939697',
+    background: '#E6E6E6',
     ...tamaguiColors,
   },
   size,
@@ -61,16 +62,18 @@ export const config = createTamagui({
   },
   themes: {
     light: {
-      background: tokens.color.white,
+      background: tokens.color.background,
       primary: tokens.color.primary,
       slate: tokens.color.slate,
       gray: tokens.color.gray,
+      white: tokens.color.white,
     },
     dark: {
       background: tokens.color.black,
       primary: tokens.color.primary,
       slate: tokens.color.slate,
       gray: tokens.color.gray,
+      white: tokens.color.white,
     },
   },
 })
