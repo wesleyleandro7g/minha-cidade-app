@@ -3,8 +3,10 @@ import {
   ReactNode,
   SetStateAction,
   createContext,
+  useEffect,
   useState,
 } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 type CityType = {
   id?: string
@@ -35,6 +37,27 @@ export default function ContextProvider({ children }: { children: ReactNode }) {
   const [selectedCategory, setSelectedCategory] = useState<CityType>(
     {} as CityType
   )
+
+  async function getLocationData() {
+    try {
+      const jsonValue = await AsyncStorage.getItem('current-city')
+
+      if (jsonValue != null) {
+        const storedData = JSON.parse(jsonValue) as { id: string; name: string }
+
+        setSelectedCity({
+          id: storedData.id,
+          name: storedData.name,
+        })
+      }
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  useEffect(() => {
+    getLocationData()
+  }, [])
 
   return (
     <AppContext.Provider

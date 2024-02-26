@@ -1,6 +1,7 @@
 import { useState, useContext, Dispatch, SetStateAction } from 'react'
 import { X, Search } from 'lucide-react-native'
 import { Button, Sheet, XStack, YStack, Text, useTheme } from 'tamagui'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { CustomRadioItem } from '@/components/radio-group'
 import { Input } from '@/components/input'
@@ -19,6 +20,18 @@ export function SelectCity({ isOpen, setOpen }: SelectCityProps) {
 
   const [position, setPosition] = useState(0)
   const [search, setSearch] = useState('')
+
+  async function handleChangeLocation(value: { id: string; name: string }) {
+    setSelectedCity({ id: value.id, name: value.name })
+
+    try {
+      const jsonValue = JSON.stringify(value)
+
+      await AsyncStorage.setItem('current-city', jsonValue)
+    } catch (e) {
+      console.error(e)
+    }
+  }
 
   return (
     <Sheet
@@ -78,7 +91,7 @@ export function SelectCity({ isOpen, setOpen }: SelectCityProps) {
                   label={item.name}
                   isSelected={selectedCity.id === item.id}
                   onSelect={() =>
-                    setSelectedCity({ id: item.id, name: item.name })
+                    handleChangeLocation({ id: item.id, name: item.name })
                   }
                 />
               ))}
