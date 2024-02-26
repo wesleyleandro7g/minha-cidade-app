@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { FlatList } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { View, useTheme } from 'tamagui'
@@ -13,11 +13,16 @@ import { AppContext } from '@/context'
 export default function Explorer() {
   const theme = useTheme()
 
-  const { selectedCategory, setSelectedCategory } = useContext(AppContext)
+  const { selectedCategory, setSelectedCategory, selectedCity } =
+    useContext(AppContext)
 
   const [selectCityIsOpen, setSelectCityIsOpen] = useState(false)
   const [selectCategoryIsOpen, setSelectCategoryIsOpen] = useState(false)
   const [search, setSearch] = useState('')
+
+  useEffect(() => {
+    setSelectCityIsOpen(false)
+  }, [selectedCity])
 
   return (
     <>

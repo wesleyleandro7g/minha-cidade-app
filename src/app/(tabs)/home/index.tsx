@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { View, useTheme, ScrollView, XStack, YStack } from 'tamagui'
 import { StatusBar } from 'expo-status-bar'
 import { UserRound, Search, ChevronRight } from 'lucide-react-native'
@@ -12,13 +12,21 @@ import { OffersCard } from '@/components/offers-card'
 import { SelectCity } from '@/components/select-city'
 import { SelectCategory } from '@/components/select-category'
 
+import { AppContext } from '@/context'
+
 export default function Home() {
   const theme = useTheme()
   const router = useRouter()
 
+  const { selectedCity } = useContext(AppContext)
+
   const [search, setSearch] = useState('')
   const [selectCityIsOpen, setSelectCityIsOpen] = useState(false)
   const [selectCategoryIsOpen, setSelectCategoryIsOpen] = useState(false)
+
+  useEffect(() => {
+    setSelectCityIsOpen(false)
+  }, [selectedCity])
 
   return (
     <>
