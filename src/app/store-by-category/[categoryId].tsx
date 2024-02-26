@@ -22,6 +22,7 @@ export default function StoreByCategory() {
     <SafeAreaView style={{ flex: 1 }}>
       <View flex={1} bg='$background'>
         <StatusBar backgroundColor={theme.primary.val} style='light' />
+        <StoreByCategoryHeader category={categoryName} />
 
         <FlatList
           data={storesData}
@@ -30,10 +31,7 @@ export default function StoreByCategory() {
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => <StoreCard {...item} />}
           columnWrapperStyle={{ paddingHorizontal: 12, gap: 12 }}
-          contentContainerStyle={{ gap: 12, paddingBottom: 12 }}
-          ListHeaderComponent={() => (
-            <StoreByCategoryHeader category={categoryName} />
-          )}
+          contentContainerStyle={{ gap: 12, paddingVertical: 12 }}
         />
       </View>
     </SafeAreaView>

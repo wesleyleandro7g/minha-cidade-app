@@ -65,10 +65,6 @@ export default function RootLayout() {
               <Stack>
                 <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
                 <Stack.Screen
-                  name='search/index'
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
                   name='store/[storeId]'
                   options={{ headerShown: false }}
                 />
