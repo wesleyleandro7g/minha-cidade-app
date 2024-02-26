@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { View, useTheme, ScrollView, XStack, YStack } from 'tamagui'
 import { StatusBar } from 'expo-status-bar'
-import { UserRound, Search, ChevronRight, X } from 'lucide-react-native'
+import { UserRound, Search, ChevronRight } from 'lucide-react-native'
+import { useRouter } from 'expo-router'
 
 import { Input } from '@/components/input'
 import { Banner } from '@/components/banner'
@@ -9,12 +10,15 @@ import { CategoriesGrid } from '@/components/categories-grid'
 import { LocationSelector } from '@/components/location-selector'
 import { OffersCard } from '@/components/offers-card'
 import { SelectCity } from '@/components/select-city'
+import { SelectCategory } from '@/components/select-category'
 
 export default function Home() {
   const theme = useTheme()
+  const router = useRouter()
 
   const [search, setSearch] = useState('')
   const [selectCityIsOpen, setSelectCityIsOpen] = useState(false)
+  const [selectCategoryIsOpen, setSelectCategoryIsOpen] = useState(false)
 
   return (
     <>
@@ -61,12 +65,22 @@ export default function Home() {
           </View>
 
           <Banner />
-          <CategoriesGrid />
+          <CategoriesGrid
+            seeAllCategories={() => setSelectCategoryIsOpen(true)}
+          />
           <OffersCard />
         </ScrollView>
       </View>
 
       <SelectCity isOpen={selectCityIsOpen} setOpen={setSelectCityIsOpen} />
+      <SelectCategory
+        isOpen={selectCategoryIsOpen}
+        setOpen={setSelectCategoryIsOpen}
+        setSelectedCategory={({ id, name }) => {
+          router.navigate(`/store-by-category/${id}`)
+          setSelectCategoryIsOpen(false)
+        }}
+      />
     </>
   )
 }

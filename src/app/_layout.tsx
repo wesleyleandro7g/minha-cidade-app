@@ -3,7 +3,7 @@ import '../../tamagui-web.css'
 import { useCallback } from 'react'
 import { View, useColorScheme } from 'react-native'
 import { SplashScreen, Stack } from 'expo-router'
-import { TamaguiProvider } from 'tamagui'
+import { TamaguiProvider, Text } from 'tamagui'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import {
   DarkTheme,
@@ -23,6 +23,7 @@ import {
 import ContextProvider from '@/context'
 
 import { config } from '../../tamagui.config'
+import { ChevronLeft } from 'lucide-react-native'
 
 export { ErrorBoundary } from 'expo-router'
 
@@ -73,6 +74,10 @@ export default function RootLayout() {
                 />
                 <Stack.Screen
                   name='store-product/[productId]'
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name='store-by-category/[categoryId]'
                   options={{ headerShown: false }}
                 />
               </Stack>

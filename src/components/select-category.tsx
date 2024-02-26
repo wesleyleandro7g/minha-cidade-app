@@ -1,19 +1,24 @@
-import { useState, useContext, Dispatch, SetStateAction } from 'react'
+import { useState, Dispatch, SetStateAction } from 'react'
 import { X } from 'lucide-react-native'
 import { Button, Sheet, XStack, YStack, Text, useTheme, View } from 'tamagui'
 
-import { AppContext } from '@/context'
 import { categories } from '@/temp'
 import { Icon } from './icon'
 
 interface SelectCategoryProps {
   isOpen: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
+  selectedCategory?: { id?: string; name?: string }
+  setSelectedCategory: ({ id, name }: { id: string; name: string }) => void
 }
 
-export function SelectCategory({ isOpen, setOpen }: SelectCategoryProps) {
+export function SelectCategory({
+  isOpen,
+  setOpen,
+  selectedCategory,
+  setSelectedCategory,
+}: SelectCategoryProps) {
   const theme = useTheme()
-  const { selectedCategory, setSelectedCategory } = useContext(AppContext)
 
   const [position, setPosition] = useState(0)
 
@@ -89,7 +94,7 @@ export function SelectCategory({ isOpen, setOpen }: SelectCategoryProps) {
                       gap='$2'
                       br='$6'
                       bg={
-                        categoryItem.id === selectedCategory.id
+                        categoryItem.id === selectedCategory?.id
                           ? theme.primary.val
                           : `${theme.primary.val}40`
                       }
@@ -103,7 +108,7 @@ export function SelectCategory({ isOpen, setOpen }: SelectCategoryProps) {
                       <Icon
                         name={categoryItem.iconName}
                         color={
-                          categoryItem.id === selectedCategory.id
+                          categoryItem.id === selectedCategory?.id
                             ? theme.white.val
                             : theme.primary.val
                         }
@@ -113,7 +118,7 @@ export function SelectCategory({ isOpen, setOpen }: SelectCategoryProps) {
                         fontWeight='600'
                         textTransform='capitalize'
                         color={
-                          categoryItem.id === selectedCategory.id
+                          categoryItem.id === selectedCategory?.id
                             ? theme.white.val
                             : theme.primary.val
                         }
@@ -126,51 +131,6 @@ export function SelectCategory({ isOpen, setOpen }: SelectCategoryProps) {
                   ))}
                 </XStack>
               ))}
-              {/* {categories.map((item, index) => {
-                return (
-                  <View
-                    key={item.id}
-                    w='$8'
-                    jc='center'
-                    ai='center'
-                    px='$1'
-                    py='$2'
-                    gap='$2'
-                    br='$6'
-                    bg={
-                      item.id === selectedCategory.id
-                        ? theme.primary.val
-                        : `${theme.primary.val}40`
-                    }
-                    onPress={() =>
-                      setSelectedCategory({ id: item.id, name: item.name })
-                    }
-                  >
-                    <Icon
-                      name={item.iconName}
-                      color={
-                        item.id === selectedCategory.id
-                          ? theme.white.val
-                          : theme.primary.val
-                      }
-                    />
-                    <Text
-                      fontSize='$1'
-                      fontWeight='600'
-                      textTransform='capitalize'
-                      color={
-                        item.id === selectedCategory.id
-                          ? theme.white.val
-                          : theme.primary.val
-                      }
-                      textAlign='center'
-                      numberOfLines={2}
-                    >
-                      {item.name}
-                    </Text>
-                  </View>
-                )
-              })} */}
             </YStack>
           </Sheet.ScrollView>
         </YStack>

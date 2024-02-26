@@ -21,8 +21,8 @@ type CategoryType = {
 type ContextProps = {
   selectedCity: CityType
   setSelectedCity: Dispatch<SetStateAction<CityType>>
-  selectedCategory: CityType
-  setSelectedCategory: Dispatch<SetStateAction<CityType>>
+  selectedCategory: CategoryType
+  setSelectedCategory: Dispatch<SetStateAction<CategoryType>>
 }
 
 export const AppContext = createContext<ContextProps>({

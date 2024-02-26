@@ -1,9 +1,15 @@
-import { View, Text, ScrollView, useTheme, XStack } from 'tamagui'
+import { View, Text, ScrollView, useTheme, XStack, Button } from 'tamagui'
+import { Link } from 'expo-router'
+
 import { Icon } from '@/components/icon'
-
 import { categories } from '@/temp'
+import { ChevronDown } from 'lucide-react-native'
 
-export function CategoriesGrid() {
+interface CategoriesGridProps {
+  seeAllCategories: () => void
+}
+
+export function CategoriesGrid({ seeAllCategories }: CategoriesGridProps) {
   const theme = useTheme()
 
   function renderLine(position: 'top' | 'bottom') {
@@ -14,19 +20,21 @@ export function CategoriesGrid() {
     )
 
     return filteredCategories.map((item) => (
-      <View key={item.id} w='$8' jc='flex-start' ai='center' p='$1' gap='$3'>
-        <Icon name={item.iconName} color={theme.primary.val} />
-        <Text
-          fontSize='$1'
-          fontWeight='600'
-          textTransform='capitalize'
-          color='$gray'
-          textAlign='center'
-          numberOfLines={2}
-        >
-          {item.name}
-        </Text>
-      </View>
+      <Link key={item.id} href={`/store-by-category/${item.id}`} asChild>
+        <View w='$8' jc='flex-start' ai='center' p='$1' gap='$3'>
+          <Icon name={item.iconName} color={theme.primary.val} />
+          <Text
+            fontSize='$1'
+            fontWeight='600'
+            textTransform='capitalize'
+            color='$gray'
+            textAlign='center'
+            numberOfLines={2}
+          >
+            {item.name}
+          </Text>
+        </View>
+      </Link>
     ))
   }
 
@@ -36,9 +44,18 @@ export function CategoriesGrid() {
         <Text fontSize='$6' fontWeight='700' color='$gray'>
           Categorias
         </Text>
-        <Text fontSize='$2' fontWeight='400' color='$slate'>
-          Ver todas
-        </Text>
+        <Button
+          onPress={seeAllCategories}
+          px='$2'
+          h='$2'
+          gap='$0.25'
+          bg={`${theme.slate.val}12`}
+        >
+          <Text fontSize='$2' fontWeight='400' color='$slate'>
+            Ver todas
+          </Text>
+          <ChevronDown size={12} color={theme.slate.val} />
+        </Button>
       </XStack>
 
       <ScrollView
