@@ -1,12 +1,21 @@
-import { XStack, Text, Button } from 'tamagui'
+import { useContext } from 'react'
+import { XStack, Text, Button, useTheme } from 'tamagui'
 import { ChevronDown } from 'lucide-react-native'
 
+import { AppContext } from '@/context'
+
 interface LocationSelectorProps {
-  location: string
+  dark?: boolean
   onPress: () => void
 }
 
-export function LocationSelector({ location, onPress }: LocationSelectorProps) {
+export function LocationSelector({ dark, onPress }: LocationSelectorProps) {
+  const theme = useTheme()
+
+  const { selectedCity } = useContext(AppContext)
+
+  const color = dark ? theme.gray.val : theme.white.val
+
   return (
     <Button
       onPress={onPress}
@@ -16,10 +25,10 @@ export function LocationSelector({ location, onPress }: LocationSelectorProps) {
       jc='flex-start'
     >
       <XStack ai='center' gap='$1.5'>
-        <Text fontSize='$6' fontWeight='700' color='$white' numberOfLines={1}>
-          {location}
+        <Text fontSize='$6' fontWeight='700' color={color} numberOfLines={1}>
+          {selectedCity.name}
         </Text>
-        <ChevronDown color='#fff' size={18} />
+        <ChevronDown color={color} size={18} />
       </XStack>
     </Button>
   )

@@ -1,38 +1,10 @@
 import { View, Text, ScrollView, useTheme, XStack } from 'tamagui'
-import { Icon, type ExtractedIconNames } from '@/components/icon'
+import { Icon } from '@/components/icon'
 
-type CategoriesType = {
-  id: string
-  name: string
-  iconName: ExtractedIconNames
-}
+import { categories } from '@/temp'
 
 export function CategoriesGrid() {
   const theme = useTheme()
-
-  const categories: CategoriesType[] = [
-    { id: '1', name: 'supermercado', iconName: 'ShoppingCart' },
-    { id: '2', name: 'sorveteria', iconName: 'IceCream' },
-    { id: '3', name: 'pizzaria', iconName: 'Pizza' },
-    { id: '4', name: 'restaurante', iconName: 'UtensilsCrossed' },
-    { id: '5', name: 'hotel', iconName: 'BedDouble' },
-    { id: '7', name: 'roupas', iconName: 'Shirt' },
-    { id: '8', name: 'informática', iconName: 'ShoppingCart' },
-    { id: '9', name: 'advogado', iconName: 'ShoppingCart' },
-    { id: '10', name: 'moto-taxi', iconName: 'ShoppingCart' },
-    { id: '11', name: 'vidraçaria', iconName: 'ShoppingCart' },
-    { id: '12', name: 'pedreiro', iconName: 'ShoppingCart' },
-    { id: '13', name: 'Aluguel de roupas', iconName: 'ShoppingCart' },
-    {
-      id: '14',
-      name: 'Professor particular',
-      iconName: 'ShoppingCart',
-    },
-    { id: '15', name: 'pedreiro', iconName: 'ShoppingCart' },
-    { id: '16', name: 'pedreiro', iconName: 'ShoppingCart' },
-    { id: '17', name: 'pedreiro', iconName: 'ShoppingCart' },
-    { id: '18', name: 'pedreiro', iconName: 'ShoppingCart' },
-  ]
 
   function renderLine(position: 'top' | 'bottom') {
     const rest = position === 'top' ? 0 : 1

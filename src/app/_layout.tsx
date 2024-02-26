@@ -1,15 +1,15 @@
 import '../../tamagui-web.css'
 
+import { useCallback } from 'react'
+import { View, useColorScheme } from 'react-native'
+import { SplashScreen, Stack } from 'expo-router'
+import { TamaguiProvider } from 'tamagui'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from '@react-navigation/native'
-import { SplashScreen, Stack } from 'expo-router'
-import { TamaguiProvider } from 'tamagui'
-import { View, useColorScheme } from 'react-native'
-import { useCallback } from 'react'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 import {
   useFonts,
@@ -19,6 +19,8 @@ import {
   Nunito_600SemiBold,
   Nunito_700Bold,
 } from '@expo-google-fonts/nunito'
+
+import ContextProvider from '@/context'
 
 import { config } from '../../tamagui.config'
 
@@ -57,23 +59,25 @@ export default function RootLayout() {
         <ThemeProvider
           value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
         >
-          <SafeAreaProvider>
-            <Stack>
-              <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-              <Stack.Screen
-                name='search/index'
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name='store/[storeId]'
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name='store-product/[productId]'
-                options={{ headerShown: false }}
-              />
-            </Stack>
-          </SafeAreaProvider>
+          <ContextProvider>
+            <SafeAreaProvider>
+              <Stack>
+                <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+                <Stack.Screen
+                  name='search/index'
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name='store/[storeId]'
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name='store-product/[productId]'
+                  options={{ headerShown: false }}
+                />
+              </Stack>
+            </SafeAreaProvider>
+          </ContextProvider>
         </ThemeProvider>
       </TamaguiProvider>
     </View>
