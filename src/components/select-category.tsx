@@ -10,23 +10,16 @@ import {
   View,
   Spinner,
 } from 'tamagui'
-import { useQuery } from '@tanstack/react-query'
 
-import { supabase } from '@/db/supabase'
 import { Icon } from './icon'
 import { ErrorComponent } from './error'
+import { useCategories } from '@/hooks/useCategories'
 
 interface SelectCategoryProps {
   isOpen: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
   selectedCategory?: { id?: string; name?: string }
   setSelectedCategory: ({ id, name }: { id: string; name: string }) => void
-}
-
-type CategoryType = {
-  id: number
-  name: string
-  icon_name: string
 }
 
 export function SelectCategory({
@@ -39,18 +32,7 @@ export function SelectCategory({
 
   const [position, setPosition] = useState(0)
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['categories'],
-    queryFn: async () => {
-      const { data, error } = await supabase.from('categories').select('*')
-
-      if (error) {
-        throw error
-      }
-
-      return data as CategoryType[]
-    },
-  })
+  const { data, isLoading, isError } = useCategories()
 
   const categoriesLength = data ? data.length : 0
 

@@ -35,21 +35,7 @@ export default function Home() {
         <ScrollView contentContainerStyle={{ paddingBottom: 12 }}>
           <View bg='$primary'>
             <YStack gap='$3' p='$3' jc='space-between'>
-              <XStack w='100%' jc='space-between' ai='center'>
-                <LocationSelector onPress={() => setSelectCityIsOpen(true)} />
-
-                <View
-                  w='$3.5'
-                  h='$3.5'
-                  br='$12'
-                  bg='$white'
-                  jc='center'
-                  ai='center'
-                  onPress={() => alert('Pressed!')}
-                >
-                  <UserRound color={theme.primary.val} size={20} />
-                </View>
-              </XStack>
+              <LocationSelector onPress={() => setSelectCityIsOpen(true)} />
 
               <Input.Root>
                 <Input.Addons>

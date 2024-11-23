@@ -1,36 +1,16 @@
 import { useContext } from 'react'
 import { View, Text, ScrollView, useTheme, Spinner, XStack } from 'tamagui'
-import { useQuery } from '@tanstack/react-query'
 
 import { Icon } from '@/components/icon'
-
 import { AppContext } from '@/providers/ContextProvider'
-
-import { supabase } from '@/db/supabase'
-
-type CategoryType = {
-  id: number
-  name: string
-  icon_name: string
-}
+import { useCategories } from '@/hooks/useCategories'
 
 export function CategoriesHorizontal() {
   const theme = useTheme()
 
   const { selectedCategory, setSelectedCategory } = useContext(AppContext)
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['categories'],
-    queryFn: async () => {
-      const { data, error } = await supabase.from('categories').select('*')
-
-      if (error) {
-        throw error
-      }
-
-      return data as CategoryType[]
-    },
-  })
+  const { data, isLoading, isError } = useCategories()
 
   if (isError) {
     return
@@ -64,7 +44,13 @@ export function CategoriesHorizontal() {
                   : `${theme.primary.val}40`
               }
               onPress={() =>
-                setSelectedCategory({ id: item.id, name: item.name })
+                setSelectedCategory((oldState) => {
+                  if (oldState.id === item.id) {
+                    return { id: 0, name: '' }
+                  }
+
+                  return { id: item.id, name: item.name }
+                })
               }
             >
               <Icon
