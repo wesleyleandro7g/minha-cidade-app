@@ -12,7 +12,7 @@ import { OffersCard } from '@/components/offers-card'
 import { SelectCity } from '@/components/select-city'
 import { SelectCategory } from '@/components/select-category'
 
-import { AppContext } from '@/context'
+import { AppContext } from '@/providers/ContextProvider'
 
 export default function Home() {
   const theme = useTheme()

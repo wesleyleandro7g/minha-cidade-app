@@ -11,7 +11,7 @@ interface IconProps {
 }
 
 export function Icon({ name, color = '#000', size = 24 }: IconProps) {
-  const LucideIcon = icons[name]
+  const LucideIcon = icons[name] || icons['Building']
 
   return <LucideIcon color={color} size={size} />
 }

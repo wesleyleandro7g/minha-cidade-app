@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { XStack, Text, Button, useTheme } from 'tamagui'
 import { ChevronDown } from 'lucide-react-native'
 
-import { AppContext } from '@/context'
+import { AppContext } from '@/providers/ContextProvider'
 
 interface LocationSelectorProps {
   dark?: boolean

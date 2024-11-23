@@ -15,6 +15,7 @@ export default function TabLayout() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Tabs
+        initialRouteName='home/index'
         screenOptions={{
           tabBarActiveTintColor: primaryColor,
           tabBarInactiveTintColor: '#797979',

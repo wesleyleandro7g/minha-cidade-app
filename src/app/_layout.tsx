@@ -20,7 +20,8 @@ import {
   Nunito_700Bold,
 } from '@expo-google-fonts/nunito'
 
-import ContextProvider from '@/context'
+import ContextProvider from '@/providers/ContextProvider'
+import { QueryProvider } from '@/providers/QueryProvider'
 
 import { config } from '../../tamagui.config'
 import { ChevronLeft } from 'lucide-react-native'
@@ -60,25 +61,30 @@ export default function RootLayout() {
         <ThemeProvider
           value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
         >
-          <ContextProvider>
-            <SafeAreaProvider>
-              <Stack>
-                <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-                <Stack.Screen
-                  name='store/[storeId]'
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name='store-product/[productId]'
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name='store-by-category/[categoryId]'
-                  options={{ headerShown: false }}
-                />
-              </Stack>
-            </SafeAreaProvider>
-          </ContextProvider>
+          <QueryProvider>
+            <ContextProvider>
+              <SafeAreaProvider>
+                <Stack initialRouteName='(tabs)/home/index'>
+                  <Stack.Screen
+                    name='(tabs)'
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name='store/[storeId]'
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name='store-product/[productId]'
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name='store-by-category/[categoryId]'
+                    options={{ headerShown: false }}
+                  />
+                </Stack>
+              </SafeAreaProvider>
+            </ContextProvider>
+          </QueryProvider>
         </ThemeProvider>
       </TamaguiProvider>
     </View>

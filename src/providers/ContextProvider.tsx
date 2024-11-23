@@ -9,12 +9,12 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 type CityType = {
-  id?: string
+  id?: number
   name?: string
 }
 
 type CategoryType = {
-  id?: string
+  id?: number
   name?: string
 }
 
@@ -34,8 +34,8 @@ export const AppContext = createContext<ContextProps>({
 
 export default function ContextProvider({ children }: { children: ReactNode }) {
   const [selectedCity, setSelectedCity] = useState<CityType>({} as CityType)
-  const [selectedCategory, setSelectedCategory] = useState<CityType>(
-    {} as CityType
+  const [selectedCategory, setSelectedCategory] = useState<CategoryType>(
+    {} as CategoryType
   )
 
   async function getLocationData() {
@@ -43,7 +43,7 @@ export default function ContextProvider({ children }: { children: ReactNode }) {
       const jsonValue = await AsyncStorage.getItem('current-city')
 
       if (jsonValue != null) {
-        const storedData = JSON.parse(jsonValue) as { id: string; name: string }
+        const storedData = JSON.parse(jsonValue) as { id: number; name: string }
 
         setSelectedCity({
           id: storedData.id,

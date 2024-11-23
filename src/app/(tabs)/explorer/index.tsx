@@ -8,7 +8,7 @@ import { ExplorerHeader } from '@/components/explorer-header'
 import { SelectCity } from '@/components/select-city'
 import { SelectCategory } from '@/components/select-category'
 import { StoreCard } from '@/components/store-card'
-import { AppContext } from '@/context'
+import { AppContext } from '@/providers/ContextProvider'
 
 export default function Explorer() {
   const theme = useTheme()

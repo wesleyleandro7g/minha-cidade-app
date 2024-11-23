@@ -134,7 +134,7 @@ export const cities = [
 
 export const categories: CategoriesType[] = [
   { id: '1', name: 'supermercado', iconName: 'ShoppingCart' },
-  { id: '2', name: 'sorveteria', iconName: 'IceCream' },
+  { id: '2', name: 'sorveteria', iconName: 'IceCreamBowl' },
   { id: '3', name: 'pizzaria', iconName: 'Pizza' },
   { id: '4', name: 'restaurante', iconName: 'UtensilsCrossed' },
   { id: '5', name: 'hotel', iconName: 'BedDouble' },

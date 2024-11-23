@@ -1,17 +1,28 @@
 import { useState, useContext, Dispatch, SetStateAction } from 'react'
 import { X, Search } from 'lucide-react-native'
-import { Button, Sheet, XStack, YStack, Text, useTheme } from 'tamagui'
+import { Button, Sheet, XStack, YStack, Text, useTheme, Spinner } from 'tamagui'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useQuery } from '@tanstack/react-query'
 
 import { CustomRadioItem } from '@/components/radio-group'
 import { Input } from '@/components/input'
+import { ErrorComponent } from '@/components/error'
 
-import { AppContext } from '@/context'
-import { cities } from '@/temp'
+import { AppContext } from '@/providers/ContextProvider'
+import { supabase } from '@/db/supabase'
 
 interface SelectCityProps {
   isOpen: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
+}
+
+type CityType = {
+  id: number
+  name: string
+  slug: string
+  zip_code: string
+  state: string
+  is_active: boolean
 }
 
 export function SelectCity({ isOpen, setOpen }: SelectCityProps) {
@@ -21,12 +32,27 @@ export function SelectCity({ isOpen, setOpen }: SelectCityProps) {
   const [position, setPosition] = useState(0)
   const [search, setSearch] = useState('')
 
-  async function handleChangeLocation(value: { id: string; name: string }) {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['cities'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('cities')
+        .select('*')
+        .eq('is_active', true)
+
+      if (error) {
+        throw error
+      }
+
+      return data as CityType[]
+    },
+  })
+
+  async function handleChangeLocation(value: { id: number; name: string }) {
     setSelectedCity({ id: value.id, name: value.name })
 
     try {
       const jsonValue = JSON.stringify(value)
-
       await AsyncStorage.setItem('current-city', jsonValue)
     } catch (e) {
       console.error(e)
@@ -72,31 +98,43 @@ export function SelectCity({ isOpen, setOpen }: SelectCityProps) {
             </Button>
           </XStack>
 
-          <Input.Root>
-            <Input.Addons>
-              <Search size={24} color={theme.primary.val} />
-            </Input.Addons>
+          {isError && <ErrorComponent />}
 
-            <Input.Field
-              placeholder='Pesquisar'
-              onChangeText={(e) => setSearch(e)}
-            />
-          </Input.Root>
+          {isLoading ? (
+            <XStack w='100%' jc='center' ai='center'>
+              <Spinner size='large' color={theme.primary.val} />
+            </XStack>
+          ) : (
+            !isError && (
+              <>
+                <Input.Root>
+                  <Input.Addons>
+                    <Search size={24} color={theme.primary.val} />
+                  </Input.Addons>
 
-          <Sheet.ScrollView showsVerticalScrollIndicator={false}>
-            <YStack gap='$2'>
-              {cities.map((item) => (
-                <CustomRadioItem
-                  key={item.id}
-                  label={item.name}
-                  isSelected={selectedCity.id === item.id}
-                  onSelect={() =>
-                    handleChangeLocation({ id: item.id, name: item.name })
-                  }
-                />
-              ))}
-            </YStack>
-          </Sheet.ScrollView>
+                  <Input.Field
+                    placeholder='Pesquisar'
+                    onChangeText={(e) => setSearch(e)}
+                  />
+                </Input.Root>
+
+                <Sheet.ScrollView showsVerticalScrollIndicator={false}>
+                  <YStack gap='$2'>
+                    {data?.map((item) => (
+                      <CustomRadioItem
+                        key={item.id}
+                        label={item.name}
+                        isSelected={selectedCity.id === item.id}
+                        onSelect={() =>
+                          handleChangeLocation({ id: item.id, name: item.name })
+                        }
+                      />
+                    ))}
+                  </YStack>
+                </Sheet.ScrollView>
+              </>
+            )
+          )}
         </YStack>
       </Sheet.Frame>
     </Sheet>
