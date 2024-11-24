@@ -64,7 +64,7 @@ export default function RootLayout() {
           <QueryProvider>
             <ContextProvider>
               <SafeAreaProvider>
-                <Stack initialRouteName='(tabs)/home/index'>
+                <Stack initialRouteName='home/index'>
                   <Stack.Screen
                     name='(tabs)'
                     options={{ headerShown: false }}

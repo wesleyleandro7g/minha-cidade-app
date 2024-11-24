@@ -70,8 +70,8 @@ export default function Home() {
       <SelectCategory
         isOpen={selectCategoryIsOpen}
         setOpen={setSelectCategoryIsOpen}
-        setSelectedCategory={({ id, name }) => {
-          router.navigate(`/store-by-category/${id}`)
+        setSelectedCategory={(params) => {
+          router.navigate(`/store-by-category/${params.name}`)
           setSelectCategoryIsOpen(false)
         }}
       />

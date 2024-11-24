@@ -1,6 +1,6 @@
 import { supabase } from '@/db/supabase'
 import { useQuery } from '@tanstack/react-query'
-import { View, Image, Text, Button, XStack, useTheme } from 'tamagui'
+import { View, Image, Button, XStack, useTheme } from 'tamagui'
 import { useState, useEffect } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react-native'
 

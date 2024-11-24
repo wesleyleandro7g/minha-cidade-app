@@ -15,11 +15,16 @@ import { Icon } from './icon'
 import { ErrorComponent } from './error'
 import { useCategories } from '@/hooks/useCategories'
 
+type CategoryType = {
+  id?: number
+  name?: string
+}
+
 interface SelectCategoryProps {
   isOpen: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
-  selectedCategory?: { id?: string; name?: string }
-  setSelectedCategory: ({ id, name }: { id: string; name: string }) => void
+  selectedCategory?: { id?: number; name?: string }
+  setSelectedCategory: Dispatch<SetStateAction<CategoryType>>
 }
 
 export function SelectCategory({
@@ -121,9 +126,15 @@ export function SelectCategory({
                               : `${theme.primary.val}40`
                           }
                           onPress={() =>
-                            setSelectedCategory({
-                              id: categoryItem.id,
-                              name: categoryItem.name,
+                            setSelectedCategory((oldState) => {
+                              if (oldState.id === categoryItem.id) {
+                                return { id: 0, name: '' }
+                              }
+
+                              return {
+                                id: categoryItem.id,
+                                name: categoryItem.name,
+                              }
                             })
                           }
                         >
